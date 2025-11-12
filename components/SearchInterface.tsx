@@ -12,7 +12,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables')
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabase = (supabaseUrl && supabaseAnonKey) ? createClient(supabaseUrl, supabaseAnonKey) : null
 
 interface SearchResult {
   query: string
@@ -36,6 +36,10 @@ export default function SearchInterface() {
 
   const fetchRecentSearches = async () => {
     const { data } = await supabase
+          if (!supabase) {
+      setRecentSearches([])
+      return
+    }
       .from('searches')
       .select('*')
       .order('created_at', { ascending: false })
