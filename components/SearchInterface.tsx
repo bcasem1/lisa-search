@@ -35,7 +35,7 @@ export default function SearchInterface() {
   }, [])
 
   const fetchRecentSearches = async () => {
-    coif (!supabase) {
+    if (!supabase) {
       setRecentSearches([])
       return
     }
