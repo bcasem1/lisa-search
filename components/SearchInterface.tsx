@@ -35,11 +35,12 @@ export default function SearchInterface() {
   }, [])
 
   const fetchRecentSearches = async () => {
-    const { data } = await supabase
-          if (!supabase) {
+    coif (!supabase) {
       setRecentSearches([])
       return
     }
+    
+    const { data } = await supabase
       .from('searches')
       .select('*')
       .order('created_at', { ascending: false })
